@@ -5,9 +5,9 @@
 
 <svg height="300" width="450" >
 	<defs>
-		<rect style="fill:rgba(1,1,1,0);" height="30" width="30" x="0" y="0" id="white" />
-		<rect style="fill:black;" height="30" width="30" x="0" y="0" id="black" />
-		<rect style="fill:black;" height="10000" width="10000" x="-100" y="-100" id="blank" />
+		<rect fill="rgba(1,1,1,0)" height="30" width="30" x="0" y="0" id="white" />
+		<rect fill="black" height="30" width="30" x="0" y="0" id="black" />
+		<rect fill="black" height="10000" width="10000" x="-100" y="-100" id="blank" />
 		<!-- fun fact, by default SVG filters can leak out of their bounding boxes. this is unhelpful to us, so we specifically specify no extra space -->
 		<filter id="rule110" x="0" y="0" width="100%" height="100%">
 			<!-- there's probably a better way, but in order to perform a NOT operation, I just xor against a large black (true) image called blank. -->
