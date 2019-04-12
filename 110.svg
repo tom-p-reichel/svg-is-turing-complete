@@ -1,0 +1,55 @@
+<!-- (not (a and (not (b xor c)) ) and (b or c)-->
+
+<svg height="300" width="450" >
+	<defs>
+		<rect style="fill:rgba(1,1,1,0);" height="30" width="30" x="0" y="0" id="white" />
+		<rect style="fill:black;" height="30" width="30" x="0" y="0" id="black" />
+		<rect style="fill:black;" height="10000" width="10000" x="-100" y="-100" id="blank" />
+		<rect style="fill:black;" height="30" width="30" x="0" y="0" id="debug">
+		<animate attributeName="fill" from="black" to="rgba(1,1,1,0)" dur="10s" repeatCount="indefinite" />
+		</rect>
+
+		<filter id="not" width="100" height="100">
+			<feImage href="#black" result="b" />
+			<feComposite in="SourceGraphic" in2="b" operator="xor"/>
+		</filter>
+		<filter id="rule110" x="0" y="0" width="100%" height="100%">
+			<feImage href="#blank" result="blank" />
+			<feOffset in="SourceGraphic" dy="0" dx="-30" result="C" />
+			<feOffset in="SourceGraphic" dy="0" dx="30" result="A" />
+			<feComposite in="C" in2="SourceGraphic" operator="xor" result="B XOR C" />
+			<feComposite in="blank" in2="B XOR C" operator="xor" result="NOT (B XOR C)" />
+			<feComposite in="A" in2="NOT (B XOR C)" operator="arithmetic" result="A AND (NOT (B XOR C))" k1="1" />
+			<feComposite in="blank" in2="A AND (NOT (B XOR C))" operator="xor" result="NOT (A AND (NOT (B XOR C)))" />
+			<feComposite in="C" in2="SourceGraphic" operator="over" result="B OR C" />
+			<feComposite in="B OR C" in2="NOT (A AND (NOT (B XOR C)))" operator="arithmetic" k1="1" />
+		</filter>
+	</defs>
+	<g id="data">
+		<use href="#black" x="0" y="0" />
+		<use href="#black" x="30" y="0" />
+		<use href="#white" x="60" y="0" />
+		<use href="#white" x="90" y="0" />
+		<use href="#black" x="120" y="0" />
+		<use href="#white" x="150" y="0" />
+		<use href="#black" x="180" y="0" />
+		<use href="#black" x="210" y="0" />
+		<use href="#black" x="240" y="0" />
+		<use href="#black" x="270" y="0" />
+		<use href="#black" x="300" y="0" />
+		<use href="#black" x="330" y="0" />
+		<use href="#black" x="360" y="0" />
+		<use href="#white" x="390" y="0" />
+		<use href="#black" x="420" y="0" />
+		<use href="#white" x="450" y="0" />
+	</g>
+	<use href="#data" y="30" id="line2" filter="url(#rule110)" />
+	<use href="#line2" y="30" id="line3" filter="url(#rule110)" />
+	<use href="#line3" y="30" id="line4" filter="url(#rule110)"/>
+	<use href="#line4" y="30" id="line5" filter="url(#rule110)" />
+	<use href="#line5" y="30" id="line6" filter="url(#rule110)"/>
+	<use href="#line6" y="30" id="line7" filter="url(#rule110)" />
+	<use href="#line7" y="30" id="line8" filter="url(#rule110)"/>
+	<use href="#line8" y="30" id="line9" filter="url(#rule110)" />
+	<use href="#line9" y="30" id="line10" filter="url(#rule110)"/>
+</svg>
