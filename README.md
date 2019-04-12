@@ -1,4 +1,6 @@
 # SVG Is Turing Complete
-Scalable Vector Graphics is an XML based language that describes the layout of images. It has significant image processing capabilities, as I demonstrate, these capabilities breach turing completeness.\
-Since I hadn't seen a proof of this before, I thought I ought to go ahead and do it. \
-Contained within this repo is a rather slow implementation of the [turing complete rule 110 cellular automata](http://mathworld.wolfram.com/Rule110.html) in SVG.
+Scalable Vector Graphics is an XML based language with significant image processing capabilities, and here I demonstrate that these capabilities breach turing completeness.\
+\
+The turing machine I choose to emulate to prove SVG's turing completeness is [rule 110](http://mathworld.wolfram.com/Rule110.html).\
+\
+Runs in `Chromium 73.0.3683.103` after several seconds, seriously, this thing is slow.

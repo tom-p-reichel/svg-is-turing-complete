@@ -1,30 +1,30 @@
+
+<!-- here's the boolean definition of rule 110 where the cells above some cell are (left to right) a, b and c. -->
 <!-- (not (a and (not (b xor c)) ) and (b or c)-->
+<!-- we're going to build it out of feComposite's very soon -->
 
 <svg height="300" width="450" >
 	<defs>
 		<rect style="fill:rgba(1,1,1,0);" height="30" width="30" x="0" y="0" id="white" />
 		<rect style="fill:black;" height="30" width="30" x="0" y="0" id="black" />
-		<rect style="fill:black;" height="10000" width="10000" x="-100" y="-100" id="blank" />
-		<rect style="fill:black;" height="30" width="30" x="0" y="0" id="debug">
-		<animate attributeName="fill" from="black" to="rgba(1,1,1,0)" dur="10s" repeatCount="indefinite" />
-		</rect>
-
-		<filter id="not" width="100" height="100">
-			<feImage href="#black" result="b" />
-			<feComposite in="SourceGraphic" in2="b" operator="xor"/>
-		</filter>
+		<!-- fun fact, by default SVG filters can leak out of their bounding boxes. this is unhelpful to us, so we specifically specify no extra space -->
 		<filter id="rule110" x="0" y="0" width="100%" height="100%">
+			<!-- there's probably a better way, but in order to perform a NOT operation, I just xor against a large black (true) image called blank. -->
 			<feImage href="#blank" result="blank" />
+			<!-- easiest way to get the adjacent shells is to make a buffer shifted one way or the other by the cell width -->
 			<feOffset in="SourceGraphic" dy="0" dx="-30" result="C" />
 			<feOffset in="SourceGraphic" dy="0" dx="30" result="A" />
+			<!-- feComposite can perform any boolean operations with enough of them. it's magical. -->
 			<feComposite in="C" in2="SourceGraphic" operator="xor" result="B XOR C" />
 			<feComposite in="blank" in2="B XOR C" operator="xor" result="NOT (B XOR C)" />
+			<!-- this "arithmetic" operation is a confusing AND gate. with k1=1, this is just multiplying the image pixels, which does an AND if we're just dealing with 1's and 0's -->
 			<feComposite in="A" in2="NOT (B XOR C)" operator="arithmetic" result="A AND (NOT (B XOR C))" k1="1" />
 			<feComposite in="blank" in2="A AND (NOT (B XOR C))" operator="xor" result="NOT (A AND (NOT (B XOR C)))" />
 			<feComposite in="C" in2="SourceGraphic" operator="over" result="B OR C" />
 			<feComposite in="B OR C" in2="NOT (A AND (NOT (B XOR C)))" operator="arithmetic" k1="1" />
 		</filter>
 	</defs>
+	<!-- initial state of the automata. you could actually import an image here, and iterate that, but I wanted it to be self contained -->
 	<g id="data">
 		<use href="#black" x="0" y="0" />
 		<use href="#black" x="30" y="0" />
@@ -43,6 +43,7 @@
 		<use href="#black" x="420" y="0" />
 		<use href="#white" x="450" y="0" />
 	</g>
+	<!-- by repeatedly using the line above and applying one more iteration of our filter, we do rule 110 -->
 	<use href="#data" y="30" id="line2" filter="url(#rule110)" />
 	<use href="#line2" y="30" id="line3" filter="url(#rule110)" />
 	<use href="#line3" y="30" id="line4" filter="url(#rule110)"/>
@@ -52,4 +53,6 @@
 	<use href="#line7" y="30" id="line8" filter="url(#rule110)"/>
 	<use href="#line8" y="30" id="line9" filter="url(#rule110)" />
 	<use href="#line9" y="30" id="line10" filter="url(#rule110)"/>
+	<!-- it becomes dramatically slower as you increase the number of iterations. this right now is a good number of lines, I tried thirty and it didn't work out well -->
+	<!-- finding the big O notation of this is an exercise left to the reader -->
 </svg>
