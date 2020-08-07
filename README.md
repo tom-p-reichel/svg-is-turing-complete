@@ -1,12 +1,9 @@
-# Cool Disclaimer: 
-For SVG to be truly turing complete in the sense of being able to run arbitrarily long tasks, it must have its output fed to it's input--- a sort of driven turing machine. However, this loop can be unrolled an arbitrary non-infinite length, so tasks of known maximum complexity can be computed in one go...\
-
-With this out of the way and apologies for being misleading:\
-
-# SVG Is Turing Complete
-Scalable Vector Graphics is an XML based language with significant image processing capabilities, and here I demonstrate that these capabilities breach turing completeness.\
+# SVG is turing-complete-ish: 
+For SVG to be truly turing complete, it must have its output fed to it's input--- making this only a sort of driven turing machine.
 \
-The turing machine I choose to emulate to prove SVG's turing completeness is [rule 110](http://mathworld.wolfram.com/Rule110.html).\
+Scalable Vector Graphics is an XML based language with significant image processing capabilities, and here I demonstrate that SVG can theoretically do arbitrarily large (but ultimately finite) computations.
+\
+It does so by unrolling a fixed number of iterations of [rule 110](http://mathworld.wolfram.com/Rule110.html), which IS turing complete, using SVG image filters.\
 \
 Runs in `Chromium 73.0.3683.103` after several seconds, seriously, this thing is slow!\
 \
